@@ -1,4 +1,4 @@
-name: Snyk Security Scan
+run-name: Snyk Security Scan
 
 on:
   pull_request:
@@ -14,13 +14,15 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v2
 
-      # Paso 2: Configurar Snyk CLI
-      - name: Install Snyk CLI
-        run: |
-          curl -sL https://static.snyk.io/snyk-install.sh | bash
-          export PATH=$HOME/.snyk/bin:$PATH
+      # Paso 2: Verificar si Snyk CLI está instalado (opcional si ya lo tienes instalado globalmente)
+      - name: Check if Snyk CLI is installed
+        run: snyk --version
 
-      # Paso 3: Ejecutar el escaneo con Snyk y guardar el reporte en un archivo JSON
+      # Paso 3: Crear el directorio de reporte (si no existe)
+      - name: Create directory for reports
+        run: |
+          mkdir -p ~/Documents/IMF/desarrolloSeguro
+
+      # Paso 4: Ejecutar el escaneo con Snyk y guardar el reporte en un archivo JSON
       - name: Run Snyk test and save the report locally
         run: snyk test --all-projects --json > ~/Documents/IMF/desarrolloSeguro/snyk-report.json
-
