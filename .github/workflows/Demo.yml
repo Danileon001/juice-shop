@@ -16,6 +16,8 @@ jobs:
 
       # Paso 2: Verificar si Snyk CLI está instalado (opcional si ya lo tienes instalado globalmente)
       - name: Check if Snyk CLI is installed
+      env:
+      SNYCK_TOKEN: ${{secrets.SNYCK_TOKEN}}
         run: snyk --version
 
       # Paso 3: Crear el directorio de reporte (si no existe)
